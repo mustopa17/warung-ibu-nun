@@ -70,13 +70,18 @@ const App = () => {
   };
 
   const updateQuantity = (id, change) => {
-    setCart(cart.map(item => {
+    setCart(cart.filter(item => {
       if (item.id === id) {
         const newQuantity = item.quantity + change;
-        return newQuantity > 0 ? { ...item, quantity: newQuantity } : item;
+        return newQuantity > 0;
+      }
+      return true;
+    }).map(item => {
+      if (item.id === id) {
+        return { ...item, quantity: item.quantity + change };
       }
       return item;
-    }).filter(item => item.quantity > 0));
+    }));
   };
 
   const updateSpiceLevel = (id, level) => {
@@ -175,11 +180,11 @@ const App = () => {
     }
     
     const needsSpiceLevel = cart.some(item => 
-      item.category !== 'Minuman' && !item.spiceLevel
+      item.category === 'Aneka Nasi Goreng' && !item.spiceLevel
     );
     
     if (needsSpiceLevel) {
-      alert('Mohon pilih level pedas untuk semua item!');
+      alert('Mohon pilih level pedas untuk semua Nasi Goreng!');
       return;
     }
 
@@ -316,8 +321,8 @@ const App = () => {
                   </div>
                 </div>
 
-                {/* Spice Level - Wajib untuk non-minuman */}
-                {item.category !== 'Minuman' && (
+                {/* Spice Level - Hanya untuk Nasi Goreng */}
+                {item.category === 'Aneka Nasi Goreng' && (
                   <div className="mb-3">
                     <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-1">
                       <Flame className="text-red-500" size={16} />
@@ -345,7 +350,7 @@ const App = () => {
                 {item.bonus && (
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                   
+                      🥤 Pilih Minuman Bonus (Opsional):
                     </label>
                     <select
                       value={item.drink || ''}
