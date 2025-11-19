@@ -91,9 +91,7 @@ const WarungIbuNun = () => {
     ));
   };
 
-  const removeItem = (id) => {
-    setCart(cart.filter(item => item.id !== id));
-  };
+  
 
   const clearCart = () => setCart([]);
 
@@ -520,12 +518,7 @@ const WarungIbuNun = () => {
                 )}
 
                 <div className="mt-3 flex justify-between items-center gap-3">
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-sm text-red-600 font-semibold hover:underline"
-                  >
-                    Hapus
-                  </button>
+               
                   <div className="text-sm text-gray-600">Subtotal: Rp {(item.price * item.quantity).toLocaleString()}</div>
                 </div>
               </div>
